@@ -1,0 +1,41 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+
+  stock-api:
+    build:
+      context: ./stock-api
+      dockerfile: Dockerfile
+    ports:
+      - 8001:80
+    volumes:
+      - ./stock-api:/var/www/html
+    depends_on:
+      - rabbitmq
+    environment:
+      SERVICE_NAME: stock-api
+      RABBITMQ_HOST: rabbitmq
+
+  log-api:  # ✅ corretamente dentro de "services"
+    build:
+      context: ./log-api
+      dockerfile: Dockerfile
+    ports:
+      - 8002:80
+    volumes:
+      - ./log-api:/var/www/html
+    depends_on:
+      - rabbitmq
+      - mongo
+    environment:
+      SERVICE_NAME: log-api
+      RABBITMQ_HOST: rabbitmq
+      MONGO_HOST: mongo
