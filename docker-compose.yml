@@ -10,6 +10,18 @@ services:
     ports:
       - 27017:27017
 
+  mysql:
+    image: mysql:8.0
+    ports:
+      - 3300:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: stockdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - mysql_data:/var/lib/mysql
+
   stock-api:
     build:
       context: ./stock-api
@@ -20,11 +32,17 @@ services:
       - ./stock-api:/var/www/html
     depends_on:
       - rabbitmq
+      - mysql
     environment:
       SERVICE_NAME: stock-api
       RABBITMQ_HOST: rabbitmq
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: stockdb
 
-  log-api:  # ✅ corretamente dentro de "services"
+  log-api:
     build:
       context: ./log-api
       dockerfile: Dockerfile
@@ -39,3 +57,6 @@ services:
       SERVICE_NAME: log-api
       RABBITMQ_HOST: rabbitmq
       MONGO_HOST: mongo
+
+volumes:
+  mysql_data:
