@@ -18,7 +18,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: stock_api
       MYSQL_USER: dudu
-      MYSQL_PASSWORD: sua_senha
+      MYSQL_PASSWORD: 123456
     volumes:
       - mysql_data:/var/lib/mysql
 
@@ -39,7 +39,7 @@ services:
       MYSQL_HOST: mysql
       MYSQL_PORT: 3306
       MYSQL_USER: dudu
-      MYSQL_PASSWORD: sua_senha
+      MYSQL_PASSWORD: 123456
       MYSQL_DATABASE: stock_api
 
   log-api:
