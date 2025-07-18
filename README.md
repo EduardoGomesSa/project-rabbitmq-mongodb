@@ -19,3 +19,7 @@ Projeto para estudar Laravel 12, MongoDB e RabbitMQ e Docker
 ```bash
    docker compose up -d
 ```
+5. Entrar em um container de uma api específica:
+```bash
+   docker compose exec stock-api bash
+```
