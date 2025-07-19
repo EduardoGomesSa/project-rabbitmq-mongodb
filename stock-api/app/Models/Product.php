@@ -9,5 +9,5 @@ class Product extends Model
 {
     use SoftDeletes;
     
-    protected $guard = ['id'];
+    protected $guarded = ['id'];
 }
