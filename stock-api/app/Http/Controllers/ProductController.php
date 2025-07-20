@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -41,5 +42,13 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         return new ProductResource($product);
+    }
+
+    public function update(Product $product, ProductUpdateRequest $request){
+        $productUpdated = $product->update($request->all());
+
+        if($productUpdated > 0) return response(['message' => 'produto atualizado com sucesso'], 200);
+
+        return response(['error' => 'erro ao atualizar produto'], 401);
     }
 }
