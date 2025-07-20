@@ -49,6 +49,14 @@ class ProductController extends Controller
 
         if($productUpdated > 0) return response(['message' => 'produto atualizado com sucesso'], 200);
 
-        return response(['error' => 'erro ao atualizar produto'], 401);
+        return response(['error' => 'erro ao atualizar produto'], 402);
+    }
+
+    public function destroy(Product $product) {
+        $productDeleted = $product->delete();
+
+        if($productDeleted > 0) return response(['message' => 'produto excluído com sucesso'], 200);
+
+        return response(['error' => 'erro ao excluír produto'], 402);
     }
 }
