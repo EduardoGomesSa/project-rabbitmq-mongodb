@@ -45,4 +45,11 @@ class AuthController extends Controller
 
         return response(['error' => 'A senha informada está incorreta'], 401);
     }
+
+    public function logout() {
+        $user = auth()->user();
+        $user->tokens()->delete();
+
+        return response(['message' => 'Logout realizado com sucesso'], 200);
+    }
 }
