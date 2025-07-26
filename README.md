@@ -30,6 +30,7 @@ Projeto para estudar Laravel 12, MongoDB e RabbitMQ e Docker
 - EloquentORM
 - Insomnia
 - MVC
+- Docker
 
 #
 <p align="center">🚧 Projeto em construção 🚧</p>
