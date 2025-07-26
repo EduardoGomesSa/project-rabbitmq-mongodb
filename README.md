@@ -23,3 +23,13 @@ Projeto para estudar Laravel 12, MongoDB e RabbitMQ e Docker
 ```bash
    docker compose exec stock-api bash
 ```
+## Tecnologias utilizadas:
+- Laravel 12
+- RabbitMQ
+- MongoDB
+- EloquentORM
+- Insomnia
+- MVC
+
+#
+<p align="center">🚧 Projeto em construção 🚧</p>
