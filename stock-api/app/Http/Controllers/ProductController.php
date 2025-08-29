@@ -6,15 +6,18 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Services\RabbitMQ\RabbitMQPublisher;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     private Product $product;
+    private RabbitMQPublisher $publisher;
 
-    public function __construct()
+    public function __construct(RabbitMQPublisher $publisher)
     {
         $this->product = new Product();
+        $this->publisher = $publisher;
     }
 
     public function index()
@@ -36,6 +39,12 @@ class ProductController extends Controller
 
         $resource = new ProductResource($productSaved);
 
+        $this->publisher->publish('stock-events', [
+            'productId' => $productSaved->id,
+            'quantity' => $productSaved->quantity,
+            'event' => 'ProductCreated'
+        ]);
+
         return $resource->response()->setStatusCode(201);
     }
 
@@ -44,18 +53,20 @@ class ProductController extends Controller
         return new ProductResource($product);
     }
 
-    public function update(Product $product, ProductUpdateRequest $request){
+    public function update(Product $product, ProductUpdateRequest $request)
+    {
         $productUpdated = $product->update($request->all());
 
-        if($productUpdated > 0) return response(['message' => 'produto atualizado com sucesso'], 200);
+        if ($productUpdated > 0) return response(['message' => 'produto atualizado com sucesso'], 200);
 
         return response(['error' => 'erro ao atualizar produto'], 402);
     }
 
-    public function destroy(Product $product) {
+    public function destroy(Product $product)
+    {
         $productDeleted = $product->delete();
 
-        if($productDeleted > 0) return response(['message' => 'produto excluído com sucesso'], 200);
+        if ($productDeleted > 0) return response(['message' => 'produto excluído com sucesso'], 200);
 
         return response(['error' => 'erro ao excluír produto'], 402);
     }
