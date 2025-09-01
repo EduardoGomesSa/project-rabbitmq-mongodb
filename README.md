@@ -1,6 +1,6 @@
 # project-rabbitmq-mongodb
 Projeto para estudar Laravel 12, MongoDB e RabbitMQ e Docker. Serão desenvolvidas duas APIs, uma sendo um CRUD de produtos e a outra para armazenar logs em um banco de dados
-noSQL, sendo as mensagens enviadas via serviço de mensageria.
+noSQL, sendo as mensagens enviadas via serviço de mensageria e salvar no Log-api com MongoDB.
 
 ## Configurar o ambiente:
 1. Criar os containers
