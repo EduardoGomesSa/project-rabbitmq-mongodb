@@ -41,7 +41,7 @@ class ProductController extends Controller
 
         $this->publisher->publish('stock-events', [
             'productId' => $productSaved->id,
-            'quantity' => $productSaved->quantity,
+            'quantity' => $productSaved->amount,
             'event' => 'ProductCreated'
         ]);
 

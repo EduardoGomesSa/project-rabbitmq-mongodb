@@ -37,5 +37,18 @@ class RabbitMQConsumer extends Command
         $channel->queue_declare('stock-events', false, true, false, false);
 
         $this->info(' [*] Waiting for messages in stocke-events. To exit press CTRL+C');
+
+        $callback = function ($msg) {
+            $this->info(" [x] Mensagem recebida: " . $msg->body);
+        };
+
+        $channel->basic_consume('stock-events', '', false, true, false, false, $callback);
+
+        while ($channel->callbacks) {
+            $channel->wait();
+        }
+
+        $channel->close();
+        $connection->close();
     }
 }
