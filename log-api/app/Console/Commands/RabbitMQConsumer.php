@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\LogEvent;
 use Illuminate\Console\Command;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
@@ -39,7 +40,20 @@ class RabbitMQConsumer extends Command
         $this->info(' [*] Waiting for messages in stocke-events. To exit press CTRL+C');
 
         $callback = function ($msg) {
-            $this->info(" [x] Mensagem recebida: " . $msg->body);
+            $this->info(" [x] Mensagem recebida: " . $msg->body . "\n");
+
+            try{
+                $data = json_decode($msg->body, true);
+
+                LogEvent::create([
+                    'event' => $data['event'] ?? 'unknown',
+                    'payload' => $data,
+                ]);
+
+                $this->info("[x] saved to MongoDB\n");
+            } catch (\Exception $e) {
+                $this->info("[!] Error saving to MongoDB: \n");
+            }
         };
 
         $channel->basic_consume('stock-events', '', false, true, false, false, $callback);
