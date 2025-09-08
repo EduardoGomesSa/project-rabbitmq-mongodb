@@ -59,6 +59,12 @@ class ProductController extends Controller
 
         if ($productUpdated > 0) return response(['message' => 'produto atualizado com sucesso'], 200);
 
+        $this->publisher->publish('stock-events', [
+            'productId' => $product->id,
+            'quantity' => $product->amount,
+            'event' => 'ProductUpdated'
+        ]);
+
         return response(['error' => 'erro ao atualizar produto'], 402);
     }
 
@@ -67,6 +73,11 @@ class ProductController extends Controller
         $productDeleted = $product->delete();
 
         if ($productDeleted > 0) return response(['message' => 'produto excluído com sucesso'], 200);
+
+        $this->publisher->publish('stock-events', [
+            'productId' => $product->id,
+            'event' => 'ProductDeleted'
+        ]);
 
         return response(['error' => 'erro ao excluír produto'], 402);
     }
