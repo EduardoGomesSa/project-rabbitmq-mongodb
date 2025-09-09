@@ -7,7 +7,6 @@ use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Services\RabbitMQ\RabbitMQPublisher;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {

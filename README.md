@@ -2,7 +2,7 @@
 Projeto para estudar Laravel 12, MongoDB e RabbitMQ e Docker. Serão desenvolvidas duas APIs, uma sendo um CRUD de produtos e a outra para armazenar logs em um banco de dados
 noSQL, sendo as mensagens enviadas via serviço de mensageria e salvar no Log-api com MongoDB.
 
-## Configurar o ambiente:
+## Configuração do ambiente:
 1. Criar os containers
 ```bash
    docker compose up -d --build
@@ -24,6 +24,10 @@ noSQL, sendo as mensagens enviadas via serviço de mensageria e salvar no Log-ap
 ```bash
    docker compose exec stock-api bash
 ```
+
+## Funcionalidades:
+- CRUD de Product
+
 ## Tecnologias utilizadas:
 - Laravel 12
 - RabbitMQ
